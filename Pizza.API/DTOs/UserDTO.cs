@@ -45,6 +45,5 @@ namespace Pizza.API.Models
 
         [Display(Name = "Administrateur")]
         public bool IsAdmin { get; set; }
-
     }
 }
