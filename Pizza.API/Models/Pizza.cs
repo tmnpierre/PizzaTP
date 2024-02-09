@@ -19,6 +19,8 @@ namespace Pizza.API.Models
 
         [Column("Categorie")]
         public Categorie Categorie { get; set; }
+
+        public ICollection<IngredientModel>? Ingredients { get; set; }
     }
 
     public enum Categorie { PizzaClassique, PizzaVegetarienne, PizzaPiquante, Calzone }
