@@ -7,10 +7,11 @@ namespace Pizza.API.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Le nom de la pizza est requis.")]
-        [StringLength(100, ErrorMessage = "Le nom ne peut pas dépasser 100 caractères.")]
+        [StringLength(50, ErrorMessage = "Le nom ne peut pas dépasser 50 caractères.")]
         public string? Nom { get; set; }
 
         [Required(ErrorMessage = "La description de la pizza est requise.")]
+        [StringLength(100, ErrorMessage = "La description ne peut pas dépasser 100 caractères.")]
         public string? Description { get; set; }
 
         [Range(0, 999.99, ErrorMessage = "Le prix doit être entre 0 et 999.99 euros.")]
