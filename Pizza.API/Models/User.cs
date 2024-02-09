@@ -28,5 +28,8 @@ namespace Pizza.API.Models
 
         [Column("Mot de passe")]
         public string? Password { get; set; }
+
+        [Column("Administrateur")]
+        public bool IsAdmin { get; set; } = false;
     }
 }
