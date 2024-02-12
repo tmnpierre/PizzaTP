@@ -17,6 +17,6 @@ namespace Pizza.API.Models
         [Column("Prix")]
         public decimal Price { get; set; }
 
-        public ICollection<PizzaModel>? Pizzas { get; set; }
+        public ICollection<PizzaModel> Pizzas { get; set; } = new List<PizzaModel>();
     }
 }
