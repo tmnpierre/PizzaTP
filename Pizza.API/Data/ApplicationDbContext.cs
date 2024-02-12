@@ -33,7 +33,7 @@ namespace Pizza.API.Data
                 new PizzaModel { Id = 2, Nom = "Pepperoni", Description = "Piquante avec pepperoni.", Prix = 12.00m, Categorie = Categorie.PizzaPiquante },
                 new PizzaModel { Id = 3, Nom = "Quatre fromages", Description = "Riche en fromages.", Prix = 13.00m, Categorie = Categorie.PizzaClassique },
                 new PizzaModel { Id = 4, Nom = "Végétarienne", Description = "Garnie de légumes frais.", Prix = 11.00m, Categorie = Categorie.PizzaVegetarienne },
-                new PizzaModel { Id = 5, Nom = "Hawaïenne", Description = "Jambon et ananas.", Prix = 12.00m, Categorie = Categorie.PizzaClassique }
+                new PizzaModel { Id = 5, Nom = "Hawaïenne", Description = "Jambon et ananas.", Prix = 12.00m, Categorie = Categorie.PizzaClassique },
                 new PizzaModel { Id = 6, Nom = "Calzone", Description = "Pliée et farcie, garnie de jambon, champignons et fromage.", Prix = 14.00m, Categorie = Categorie.Calzone }
             );
 
