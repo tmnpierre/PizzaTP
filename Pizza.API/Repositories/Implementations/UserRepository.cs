@@ -2,9 +2,8 @@
 using Pizza.API.Data;
 using Pizza.API.Models;
 using Pizza.API.Repositories.Interfaces;
-using System.Linq.Expressions;
 
-namespace Pizza.API.Repositories.Implementations
+namespace Pizza.API.Repositories
 {
     public class UserRepository : IRepository<UserModel>
     {
@@ -22,12 +21,12 @@ namespace Pizza.API.Repositories.Implementations
 
         public async Task<UserModel> GetByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.FindAsync(id) ?? throw new KeyNotFoundException("User not found");
         }
 
         public async Task AddAsync(UserModel entity)
         {
-            await _context.Users.AddAsync(entity);
+            _context.Users.Add(entity);
             await _context.SaveChangesAsync();
         }
 
@@ -39,7 +38,7 @@ namespace Pizza.API.Repositories.Implementations
 
         public async Task DeleteAsync(int id)
         {
-            var entity = await GetByIdAsync(id);
+            var entity = await _context.Users.FindAsync(id);
             if (entity != null)
             {
                 _context.Users.Remove(entity);
@@ -47,7 +46,7 @@ namespace Pizza.API.Repositories.Implementations
             }
         }
 
-        public async Task<IEnumerable<UserModel>> FindAsync(Expression<Func<UserModel, bool>> predicate)
+        public async Task<IEnumerable<UserModel>> FindAsync(System.Linq.Expressions.Expression<System.Func<UserModel, bool>> predicate)
         {
             return await _context.Users.Where(predicate).ToListAsync();
         }
