@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pizza.API.Data;
-using Pizza.API.Data.Repositories;
 using Pizza.API.Models;
+using Pizza.API.Repositories.Interfaces;
 using System.Linq.Expressions;
 
-namespace Pizza.API.Repositories
+namespace Pizza.API.Repositories.Implementations
 {
     public class UserRepository : IRepository<UserModel>
     {

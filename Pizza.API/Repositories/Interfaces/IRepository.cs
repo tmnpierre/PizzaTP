@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Pizza.API.Data.Repositories
+namespace Pizza.API.Repositories.Interfaces
 {
     public interface IRepository<T> where T : class
     {
