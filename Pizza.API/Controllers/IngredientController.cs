@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Pizza.API.Models;
 using Pizza.API.Repositories.Interfaces;
 
@@ -9,81 +10,51 @@ namespace Pizza.API.Controllers
     public class IngredientController : ControllerBase
     {
         private readonly IRepository<IngredientModel> _ingredientRepository;
+        private readonly IMapper _mapper;
 
-        public IngredientController(IRepository<IngredientModel> ingredientRepository)
+        public IngredientController(IRepository<IngredientModel> ingredientRepository, IMapper mapper)
         {
             _ingredientRepository = ingredientRepository;
+            _mapper = mapper;
         }
 
-        // GET: api/Ingredient
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IngredientModel>>> GetAllIngredients()
+        public async Task<ActionResult<IEnumerable<IngredientDTO>>> GetAllIngredients()
         {
             var ingredients = await _ingredientRepository.GetAllAsync();
-            return Ok(ingredients);
+            return Ok(_mapper.Map<IEnumerable<IngredientDTO>>(ingredients));
         }
 
-        // GET: api/Ingredient/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<IngredientModel>> GetIngredient(int id)
+        public async Task<ActionResult<IngredientDTO>> GetIngredient(int id)
         {
             var ingredient = await _ingredientRepository.GetByIdAsync(id);
-
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(ingredient);
+            if (ingredient == null) return NotFound();
+            return Ok(_mapper.Map<IngredientDTO>(ingredient));
         }
 
-        // POST: api/Ingredient
         [HttpPost]
-        public async Task<ActionResult<IngredientModel>> CreateIngredient(IngredientModel ingredient)
+        public async Task<ActionResult<IngredientDTO>> CreateIngredient(IngredientDTO ingredientDto)
         {
+            var ingredient = _mapper.Map<IngredientModel>(ingredientDto);
             await _ingredientRepository.AddAsync(ingredient);
-            return CreatedAtAction(nameof(GetIngredient), new { id = ingredient.Id }, ingredient);
+            return CreatedAtAction(nameof(GetIngredient), new { id = ingredient.Id }, _mapper.Map<IngredientDTO>(ingredient));
         }
 
-        // PUT: api/Ingredient/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateIngredient(int id, IngredientModel ingredient)
+        public async Task<IActionResult> UpdateIngredient(int id, IngredientDTO ingredientDto)
         {
-            if (id != ingredient.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                await _ingredientRepository.UpdateAsync(ingredient);
-            }
-            catch
-            {
-                var existingIngredient = await _ingredientRepository.GetByIdAsync(id);
-                if (existingIngredient == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            if (id != ingredientDto.Id) return BadRequest();
+            var ingredientToUpdate = await _ingredientRepository.GetByIdAsync(id);
+            if (ingredientToUpdate == null) return NotFound();
+            _mapper.Map(ingredientDto, ingredientToUpdate);
+            await _ingredientRepository.UpdateAsync(ingredientToUpdate);
             return NoContent();
         }
 
-        // DELETE: api/Ingredient/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIngredient(int id)
         {
-            var ingredient = await _ingredientRepository.GetByIdAsync(id);
-            if (ingredient == null)
-            {
-                return NotFound();
-            }
-
             await _ingredientRepository.DeleteAsync(id);
             return NoContent();
         }

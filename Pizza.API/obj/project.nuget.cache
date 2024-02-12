@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Ql/CAsjK1E1XYiaLnAxu3/jWb+U/AMkec9Ol4C00tWwmMrX1cFTOxiAjdfN/aFnW4SCbDlzRtcsg+oisg4VXnQ==",
+  "dgSpecHash": "Ek3UP6VVdZckpsuOB6WEPASU2mNm3t54ln4DALu6F0selj7tptJDTuu76uIGDOBPRyFbbKp7erLP8IxkOVDlTg==",
   "success": true,
   "projectFilePath": "C:\\Users\\tomyn\\Documents\\02 - POEC Dotnet C# Exercices\\PizzaTP\\Pizza.API\\Pizza.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\tomyn\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\tomyn\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\tomyn\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\tomyn\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",

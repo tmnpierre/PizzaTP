@@ -2,7 +2,7 @@
 
 namespace Pizza.API.Models
 {
-    public class IngredientDto
+    public class IngredientDTO
     {
         public int Id { get; set; }
 

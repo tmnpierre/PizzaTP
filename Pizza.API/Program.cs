@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pizza.API.Data;
 using Pizza.API.Models;
-using Pizza.API.Repositories.Implementations;
+using Pizza.API.Repositories;
 using Pizza.API.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +18,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddScoped<IRepository<PizzaModel>, PizzaRepository>();
 builder.Services.AddScoped<IRepository<IngredientModel>, IngredientRepository>();
 builder.Services.AddScoped<IRepository<UserModel>, UserRepository>();
+
+builder.Services.AddAutoMapper(typeof(Program));
+
 
 var app = builder.Build();
 

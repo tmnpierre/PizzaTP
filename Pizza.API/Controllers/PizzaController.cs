@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Pizza.API.Models;
 using Pizza.API.Repositories.Interfaces;
 
@@ -9,81 +10,51 @@ namespace Pizza.API.Controllers
     public class PizzaController : ControllerBase
     {
         private readonly IRepository<PizzaModel> _pizzaRepository;
+        private readonly IMapper _mapper;
 
-        public PizzaController(IRepository<PizzaModel> pizzaRepository)
+        public PizzaController(IRepository<PizzaModel> pizzaRepository, IMapper mapper)
         {
             _pizzaRepository = pizzaRepository;
+            _mapper = mapper;
         }
 
-        // GET: api/Pizza
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PizzaModel>>> GetAllPizzas()
+        public async Task<ActionResult<IEnumerable<PizzaDTO>>> GetAllPizzas()
         {
             var pizzas = await _pizzaRepository.GetAllAsync();
-            return Ok(pizzas);
+            return Ok(_mapper.Map<IEnumerable<PizzaDTO>>(pizzas));
         }
 
-        // GET: api/Pizza/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<PizzaModel>> GetPizza(int id)
+        public async Task<ActionResult<PizzaDTO>> GetPizza(int id)
         {
             var pizza = await _pizzaRepository.GetByIdAsync(id);
-
-            if (pizza == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(pizza);
+            if (pizza == null) return NotFound();
+            return Ok(_mapper.Map<PizzaDTO>(pizza));
         }
 
-        // POST: api/Pizza
         [HttpPost]
-        public async Task<ActionResult<PizzaModel>> CreatePizza(PizzaModel pizza)
+        public async Task<ActionResult<PizzaDTO>> CreatePizza(PizzaDTO pizzaDto)
         {
+            var pizza = _mapper.Map<PizzaModel>(pizzaDto);
             await _pizzaRepository.AddAsync(pizza);
-            return CreatedAtAction(nameof(GetPizza), new { id = pizza.Id }, pizza);
+            return CreatedAtAction(nameof(GetPizza), new { id = pizza.Id }, _mapper.Map<PizzaDTO>(pizza));
         }
 
-        // PUT: api/Pizza/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePizza(int id, PizzaModel pizza)
+        public async Task<IActionResult> UpdatePizza(int id, PizzaDTO pizzaDto)
         {
-            if (id != pizza.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                await _pizzaRepository.UpdateAsync(pizza);
-            }
-            catch
-            {
-                var existingPizza = await _pizzaRepository.GetByIdAsync(id);
-                if (existingPizza == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            if (id != pizzaDto.Id) return BadRequest();
+            var pizzaToUpdate = await _pizzaRepository.GetByIdAsync(id);
+            if (pizzaToUpdate == null) return NotFound();
+            _mapper.Map(pizzaDto, pizzaToUpdate);
+            await _pizzaRepository.UpdateAsync(pizzaToUpdate);
             return NoContent();
         }
 
-        // DELETE: api/Pizza/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePizza(int id)
         {
-            var pizza = await _pizzaRepository.GetByIdAsync(id);
-            if (pizza == null)
-            {
-                return NotFound();
-            }
-
             await _pizzaRepository.DeleteAsync(id);
             return NoContent();
         }
