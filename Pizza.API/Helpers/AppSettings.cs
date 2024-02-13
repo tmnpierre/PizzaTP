@@ -1,4 +1,4 @@
-﻿namespace ContactApiDTOAsync.Helpers
+﻿namespace Pizza.API.Helpers
 {
     public class AppSettings
     {
