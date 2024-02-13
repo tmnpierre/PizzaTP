@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Pizza.API.Validators;
+using System.ComponentModel.DataAnnotations;
 
 namespace Pizza.API.Models
 {
@@ -40,7 +41,7 @@ namespace Pizza.API.Models
 
         [Display(Name = "Mot de passe")]
         [Required(ErrorMessage = "Mot de passe Manquant")]
-        [RegularExpression(@"^(?=.*[a-z].*[a-z])(?=.*[A-Z].*[A-Z])(?=.*\d.*\d)(?=.*[\W_].*[\W_].*[\W_]).{8,}$", ErrorMessage = "Le mot de passe doit contenir au moins deux minuscules, deux majuscules, deux chiffres et trois caractères spéciaux.")]
+        [PasswordValidator]
         public string? Password { get; set; }
 
         [Display(Name = "Administrateur")]

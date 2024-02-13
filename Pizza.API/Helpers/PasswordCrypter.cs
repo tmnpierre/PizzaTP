@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace ContactApiDTOAsync.Helpers
+namespace Pizza.API.Helpers
 {
     public class PasswordCrypter
     {

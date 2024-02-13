@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace ContactApiDTOAsync.Validator
+namespace Pizza.API.Validators
 {
     public class PasswordValidator : ValidationAttribute
     {
